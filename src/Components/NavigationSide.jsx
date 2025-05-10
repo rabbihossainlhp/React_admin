@@ -1,56 +1,78 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-    BellOutlined, 
-    MenuOutlined, 
-    BorderlessTableOutlined, 
-    DashboardOutlined, 
-    CloseCircleOutlined , 
-    SettingOutlined, 
-    StarOutlined, 
-    TagsOutlined, 
-    UsergroupAddOutlined 
+    DashboardOutlined,BorderlessTableOutlined,BellOutlined,
+    StarOutlined,UsergroupAddOutlined,SettingOutlined,
+    TagsOutlined,UserOutlined
 } from '@ant-design/icons';
-import { Card } from 'antd';
+import { Layout, Menu, theme } from 'antd';
+const { Header, Content, Footer, Sider } = Layout;
+
 
 const NavigationSide = () => {
-    
-    const [clickedMenue,setClickedMenue] = useState(false);
-    const [activeItem,setActiveItem] = useState(null);
-    
-    const onMenueClicke = ()=>{
-        setClickedMenue(!clickedMenue);
-    }
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
+  const NavigationCoustomClass = 'hover:!bg-gray-500 !rounded-full text-lg font-bold'
+
+  const NavigationItems = [
+    {label:"Dashboard",     key: 'dashboard',    className:NavigationCoustomClass,   icon: <DashboardOutlined  className='!text-2xl ' /> } , 
+    {label:"Catagories",    key: 'catagories',   className:NavigationCoustomClass,   icon: <BorderlessTableOutlined className='!text-2xl ' /> } , 
+    {label:"Notification",  key: 'notification', className:NavigationCoustomClass,   icon: <BellOutlined className='!text-2xl ' /> } , 
+    {label:"Review",        key: 'review' ,      className:NavigationCoustomClass,   icon: <StarOutlined className='!text-2xl ' /> } , 
+    {label:"User",          key: 'user',         className:NavigationCoustomClass,   icon: <UsergroupAddOutlined className='!text-2xl ' /> } , 
+    {label:"Settings",      key: 'settings',     className:NavigationCoustomClass,   icon: <SettingOutlined className='!text-2xl ' /> } , 
+    {label:"Tags",          key: 'tags',         className:NavigationCoustomClass,   icon: <TagsOutlined className='!text-2xl ' /> } , 
+];
 
 
-    const NavigationItems = [
-        {name:"Dashboard",    icon: <DashboardOutlined  className='text-2xl ' /> } , 
-        {name:"Catagories",   icon: <BorderlessTableOutlined className='text-2xl ' /> } , 
-        {name:"Notification", icon: <BellOutlined className='text-2xl ' /> } , 
-        {name:"Review",       icon: <StarOutlined className='text-2xl ' /> } , 
-        {name:"User",         icon: <UsergroupAddOutlined className='text-2xl ' /> } , 
-        {name:"Settings",     icon: <SettingOutlined className='text-2xl ' /> } , 
-        {name:"Tags",         icon: <TagsOutlined className='text-2xl ' /> } , 
-    ];
-    
-    return (
-        <div>
-            <div className='absolute left-2 top-2 text-3xl font-bold border-2 h-14 w-14 text-center rounded-full p-2 cursor-pointer sm:hidden ' onClick={onMenueClicke} ><MenuOutlined  /></div>
-            <div className={`sidebar bg-blue-600 h-screen w-72 relative flex flex-col items-center transition-all duration-300  ${clickedMenue?"left-0":"  -left-full"}  sm:left-0 justify-between `}>
-                <span className='relative sm:hidden visible right-0  top-1 w-full text-4xl font-bold text-white  ' onClick={onMenueClicke}><CloseCircleOutlined className='absolute right-2 top-2' /> </span>
-                <h2 className='text-yellow-300 font-bold text-2xl h-1/5 w-full text-center content-center'>.SoHojPor@</h2>
-                <ul className="sidebrItem h-4/5 text-white font-bold text-xl flex flex-col justify-evenly items-start pl-2 w-4/5">
-                    {
-                        NavigationItems.map((item,index)=>{
-                            return <li key={index} className={`h-11 w-full flex items-center gap-4 pl-4  ${activeItem === index ? 'bg-black rounded-4xl':'hover:bg-indigo-900 hover:rounded-4xl'} cursor-pointer transition-all `} 
-                                    onClick={()=>setActiveItem(index)}>
-                                        {item.icon} {item.name}
-                                    </li>
-                        })
-                    }
-                </ul>
-            </div>
-        </div>  
-    );
+
+  return (
+    <Layout className='!min-h-screen' >
+      <Sider
+        width={'290px'}
+        className='!px-4 '
+        breakpoint="lg"
+        collapsedWidth="0"
+        onBreakpoint={broken => {
+            console.log(broken);
+        }}
+        onCollapse={(collapsed, type) => {
+          console.log(collapsed, type);
+        }}
+      >
+        <div className="demo-logo-vertical h-30 flex justify-center items-end  text-yellow-600 text-2xl font-bold pb-4 ">
+            <h1 className='cursor-pointer' >.SoHOJ-Por@</h1>
+        </div>
+        <Menu 
+            theme="dark" mode="inline" defaultSelectedKeys={['dashboard']} items={NavigationItems.map(item=>({
+                ...item,
+                className:item.className
+            }))} /> 
+
+      </Sider>
+      <Layout>
+        <Header style={{background:'none'}} className='shadow-md flex items-center justify-between'>
+            <strong className='text-2xl text-yellow-900' >.SoHOJ-Por@-Admin</strong>
+            <div className='cursor-pointer border-1 p-2 w-10 h-10 rounded-full text-2xl flex'><UserOutlined/></div>
+        </Header>
+        <Content style={{ margin: '24px 16px 0' }}>
+          <div
+            style={{
+              padding: 24,
+              minHeight: 360,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+            content
+          </div>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>
+          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        </Footer>
+      </Layout>
+    </Layout>
+  );
 };
-
 export default NavigationSide;
