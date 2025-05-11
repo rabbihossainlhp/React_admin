@@ -8,7 +8,7 @@ import { Layout, Menu, theme } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 
 
-const NavigationSide = () => {
+const MainLayout = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -75,4 +75,4 @@ const NavigationSide = () => {
     </Layout>
   );
 };
-export default NavigationSide;
+export default MainLayout;

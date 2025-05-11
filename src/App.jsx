@@ -1,11 +1,11 @@
 import { Card } from "antd"
-import NavigationSide from "./Components/NavigationSide"
+import MainLayout from "./Layouts/MainLayout"
 
 function App() {
 
   return (
     <>
-      <NavigationSide/>
+      <MainLayout/>
     </>
   )
 }
